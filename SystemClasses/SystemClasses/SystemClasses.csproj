@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>MyFantasy.SystemClasses</AssemblyName>
+    <RootNamespace>MyFantasy.SystemClasses</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>myfantasy.ru</Authors>
+    <Company>myfantasy.ru</Company>
+    <Description>base extension</Description>
+    <Copyright>myfantasy.ru</Copyright>
+    <PackageProjectUrl>https://github.com/superbotan/SystemClasses</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+</Project>
