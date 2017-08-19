@@ -197,10 +197,26 @@ namespace System.Linq
             }
         }
 
-        public static string TryGetJson(this object obj, string root_name = "json", Action<Exception> a_exc = null)
+        public static string TryGetJson(this object obj, string root_name = null, Action<Exception> a_exc = null)
         {
-            Dictionary<string, object> obj_dict = new Dictionary<string, object>() { { root_name, obj } };
-            return TryGetJson(obj_dict, a_exc);
+            if (root_name == null)
+            {
+                try
+                {
+                    var s = JsonConvert.SerializeObject(obj);
+                    return s;
+                }
+                catch (Exception ex)
+                {
+                    a_exc?.Invoke(ex);
+                    return null;
+                }
+            }
+            else
+            {
+                Dictionary<string, object> obj_dict = new Dictionary<string, object>() { { root_name, obj } };
+                return TryGetJson(obj_dict, a_exc);
+            }
         }
         public static string TryGetJson(this Dictionary<string, object> obj, Action<Exception> a_exc = null)
         {
@@ -211,10 +227,7 @@ namespace System.Linq
             }
             catch (Exception ex)
             {
-                if (a_exc != null)
-                {
-                    a_exc(ex);
-                }
+                a_exc?.Invoke(ex);
                 return null;
             }
         }
