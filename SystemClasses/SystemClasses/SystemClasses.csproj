@@ -10,7 +10,7 @@
     <Description>base extension</Description>
     <Copyright>myfantasy.ru</Copyright>
     <PackageProjectUrl>https://github.com/superbotan/SystemClasses</PackageProjectUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

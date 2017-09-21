@@ -297,6 +297,30 @@ namespace System.Linq
                 }
                 else
                 {
+                    if (o == null)
+                        return default(T);
+
+                    if (typeof(T) == typeof(long?))
+                    {
+                        return o is long ? (T)o : o is int ? (T)o : default(T);
+                    }
+                    if (typeof(T) == typeof(bool?))
+                    {
+                        return o is bool ? (T)o : default(T);
+                    }
+                    if (typeof(T) == typeof(DateTime?))
+                    {
+                        return o is DateTime ? (T)o : default(T);
+                    }
+                    if (typeof(T) == typeof(TimeSpan?))
+                    {
+                        return o is TimeSpan ? (T)o : default(T);
+                    }
+                    if (typeof(T) == typeof(decimal?))
+                    {
+                        return o is decimal ? (T)o : o is long ? (T)o : o is int ? (T)o : default(T);
+                    }
+
                     return o is T ? (T)o : default(T);
                 }
             }
