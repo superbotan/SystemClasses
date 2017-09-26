@@ -57,6 +57,17 @@ namespace System.Linq
         {
             return string.IsNullOrEmpty(s);
         }
+
+        public static bool IsNullOrEmpty<T>(this List<T> s)
+        {
+            return s == null || s.Count == 0;
+        }
+
+        public static bool IsNullOrEmpty<T>(this T[] s)
+        {
+            return s == null || s.Length == 0;
+        }
+
         public static T GetValueOrDefault<K, T>(this Dictionary<K, T> source, K key, T defValue = default(T))
         {
             T res;
