@@ -31,6 +31,32 @@ namespace System.Linq
             return t == s || t != null && s != null & t.IndexOf(s) >= 0;
         }
 
+        public static Tuple<string, int> IndexOfAnyItem(this string str, string[] items, int start_index = 0, StringComparison sc = StringComparison.OrdinalIgnoreCase)
+        {
+            int index = -1;
+            string item = null;
+
+            foreach (var s in items)
+            {
+                if (s != null)
+                {
+                    int ix = str.IndexOf(s, start_index, sc);
+                    if (ix > -1 && (index > ix || index == -1))
+                    {
+                        index = ix;
+                        item = s;
+                    }
+                }
+            }
+
+            return new Tuple<string, int>(item, index);
+        }
+
+        public static bool ContainsAll(this string[] s, string[] t)
+        {
+            return !s.Distinct().Any(f => !t.Contains(f));
+        }
+
         public static long TryParseLongOrDefault(this string value, long def = 0)
         {
             long res;
