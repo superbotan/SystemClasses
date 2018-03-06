@@ -10,6 +10,16 @@ namespace System.Linq
     { }
     public static class Linq
     {
+        /// <summary>
+        /// Собирает все факты ошибок (идея: ошибок по идее быть не должно в принципе!)
+        /// </summary>
+        public static event Action<Exception> OnGlobalException;
+
+        public static void OnErrorExecute(Exception ex)
+        {
+            OnGlobalException?.Invoke(ex);
+        }
+
         public static bool In<T>(this T value, params T[] elements)
         {
             bool res = false;
@@ -65,6 +75,45 @@ namespace System.Linq
                 return def;
             }
         }
+
+
+        public static T TryParseOrDefault<T>(this object o, T def = default(T))
+        {
+            if (o == null)
+                return def;
+
+            if (o is T)
+            {
+                return (T)o;
+            }
+            if (typeof(T) == typeof(long?) || typeof(T) == typeof(long))
+            {
+                return o is long ? (T)o : o is int ? (T)o : long.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(bool?) || typeof(T) == typeof(bool))
+            {
+                return o is bool ? (T)o : bool.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(DateTime?) || typeof(T) == typeof(DateTime))
+            {
+                return o is DateTime ? (T)o : DateTime.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(TimeSpan?) || typeof(T) == typeof(TimeSpan))
+            {
+                return o is TimeSpan ? (T)o : TimeSpan.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(decimal?) || typeof(T) == typeof(decimal))
+            {
+                return o is decimal ? (T)o : o is long ? (T)o : o is int ? (T)o : o is double ? (T)o : decimal.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(double?) || typeof(T) == typeof(double))
+            {
+                return o is decimal ? (T)o : o is long ? (T)o : o is int ? (T)o : o is double ? (T)o : decimal.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+
+            return def;
+        }
+
 
         public static string StripHtmlTagsUsingRegex(this string inputString)
         {
@@ -137,6 +186,22 @@ namespace System.Linq
             }
         }
 
+        public static void AddOrUpdate<K, T>(this Dictionary<K, T> source, Dictionary<K, T> values)
+        {
+            foreach (var v in values)
+            {
+                source.AddOrUpdate(v.Key, v.Value);
+            }
+        }
+
+        public static void AddIfNotExists<K, T>(this Dictionary<K, T> source, Dictionary<K, T> values)
+        {
+            foreach (var v in values)
+            {
+                source.AddIfNotExists(v.Key, v.Value);
+            }
+        }
+
         public static void ForEach<T>(this T[] source, Action<T> a)
         {
             if (source != null)
@@ -170,10 +235,9 @@ namespace System.Linq
             }
             catch (Exception ex)
             {
-                if (a_exc != null)
-                {
-                    a_exc(ex);
-                }
+                a_exc?.Invoke(ex);
+                OnGlobalException?.Invoke(ex);
+
                 return new Dictionary<string, object>();
             }
         }
@@ -242,6 +306,7 @@ namespace System.Linq
                 catch (Exception ex)
                 {
                     a_exc?.Invoke(ex);
+                    OnGlobalException?.Invoke(ex);
                     return null;
                 }
             }
@@ -261,6 +326,7 @@ namespace System.Linq
             catch (Exception ex)
             {
                 a_exc?.Invoke(ex);
+                OnGlobalException?.Invoke(ex);
                 return null;
             }
         }
