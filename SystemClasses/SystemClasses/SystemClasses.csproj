@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>MyFantasy.SystemClasses</AssemblyName>
     <RootNamespace>MyFantasy.SystemClasses</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -10,13 +10,17 @@
     <Description>base extension</Description>
     <Copyright>myfantasy.ru</Copyright>
     <PackageProjectUrl>https://github.com/superbotan/SystemClasses</PackageProjectUrl>
-    <Version>1.0.7.1</Version>
-    <AssemblyVersion>1.0.7.1</AssemblyVersion>
-    <FileVersion>1.0.7.1</FileVersion>
+    <Version>1.0.7.2</Version>
+    <AssemblyVersion>1.0.7.2</AssemblyVersion>
+    <FileVersion>1.0.7.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>
