@@ -20,6 +20,13 @@ namespace System.Linq
             OnGlobalException?.Invoke(ex);
         }
 
+        /// <summary>
+        /// try check every element with value with object.Equals()
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         public static bool In<T>(this T value, params T[] elements)
         {
             bool res = false;
@@ -88,7 +95,7 @@ namespace System.Linq
             }
             if (typeof(T) == typeof(long?) || typeof(T) == typeof(long))
             {
-                return o is long ? (T)o : o is int ? (T)o : long.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+                return o is long ? (T)o : o is int ? (T)(object)(long)(int)o : long.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
             }
             if (typeof(T) == typeof(bool?) || typeof(T) == typeof(bool))
             {
@@ -102,13 +109,13 @@ namespace System.Linq
             {
                 return o is TimeSpan ? (T)o : TimeSpan.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
             }
-            if (typeof(T) == typeof(decimal?) || typeof(T) == typeof(decimal))
-            {
-                return o is decimal ? (T)o : o is long ? (T)o : o is int ? (T)o : o is double ? (T)o : decimal.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
-            }
             if (typeof(T) == typeof(double?) || typeof(T) == typeof(double))
             {
-                return o is decimal ? (T)o : o is long ? (T)o : o is int ? (T)o : o is double ? (T)o : decimal.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+                return o is decimal ? (T)(object)(double)(decimal)o : o is long ? (T)(object)(double)(long)o : o is int ? (T)(object)(double)(int)o : o is double ? (T)o : double.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
+            }
+            if (typeof(T) == typeof(decimal?) || typeof(T) == typeof(decimal))
+            {
+                return o is decimal ? (T)o : o is long ? (T)(object)(decimal)(long)o : o is int ? (T)(object)(decimal)(int)o : o is double ? (T)(object)(decimal)(double)o : decimal.TryParse(o.ToString(), out var r) ? (T)(object)r : def;
             }
 
             return def;

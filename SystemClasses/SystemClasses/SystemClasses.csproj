@@ -10,9 +10,9 @@
     <Description>base extension</Description>
     <Copyright>myfantasy.ru</Copyright>
     <PackageProjectUrl>https://github.com/superbotan/SystemClasses</PackageProjectUrl>
-    <Version>1.0.7.2</Version>
-    <AssemblyVersion>1.0.7.2</AssemblyVersion>
-    <FileVersion>1.0.7.2</FileVersion>
+    <Version>1.0.7.3</Version>
+    <AssemblyVersion>1.0.7.3</AssemblyVersion>
+    <FileVersion>1.0.7.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
